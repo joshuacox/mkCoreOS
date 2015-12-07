@@ -1,4 +1,8 @@
 
+run: coreos simple
+
+keyd: coreos runkeyd
+
 coreos:
 	mkdir coreos; cd coreos; \
 	wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh ; \
@@ -10,7 +14,7 @@ coreos:
 	bzip2 -d coreos_production_qemu_image.img.bz2 ; \
 	chmod +x coreos_production_qemu.sh
 
-keyd:
+runkeyd:
 	cd coreos;sudo ./coreos_production_qemu.sh -a ~/.ssh/authorized_keys -- -nographic
 
 simple:
