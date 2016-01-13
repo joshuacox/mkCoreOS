@@ -1,4 +1,4 @@
-.PHONY: run clean virt-install
+.PHONY: run clean virt-install clean hardclean rmcoreos_production_qemu_image.img
 
 run: coreos_production_qemu_image.img coreos1.qcow2 coreos1 coreos1/openstack/latest/user_data .coreos.run
 
@@ -18,8 +18,12 @@ coreos1/openstack/latest/user_data:
 virt-install:
 	virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio --filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash --network bridge:virbr0,mac=52:54:00:fe:b3:c0,type=bridge --vnc --noautoconsole
 
-clean:
+hardclean: rmcoreos_production_qemu_image.img clean
+
+rmcoreos_production_qemu_image.img:
 	-rm coreos_production_qemu_image.img
+
+clean:
 	-rm -Rf coreos1
 	-rm coreos1.qcow2
 
