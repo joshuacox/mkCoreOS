@@ -16,7 +16,7 @@ coreos1/openstack/latest/user_data:
 	curl -o coreos1/openstack/latest/user_data `cat USER_DATA_URL`
 
 virt-install:
-	virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio --filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash --network=bridge:virbr0,mac=52:54:00:fe:b3:c0,type=bridge --vnc --noautoconsole
+	virt-install --connect qemu:///system --import --name coreos1 --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio --filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash --network bridge:virbr0,mac=52:54:00:fe:b3:c0,type=bridge --vnc --noautoconsole
 
 clean:
 	-rm coreos_production_qemu_image.img
