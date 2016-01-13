@@ -1,5 +1,7 @@
 .PHONY: run clean virt-install clean hardclean rmcoreos_production_qemu_image.img
 
+all: readme
+
 run: coreos_production_qemu_image.img coreos1.qcow2 coreos1 coreos1/openstack/latest/user_data .coreos.run
 
 coreos_production_qemu_image.img:
@@ -28,3 +30,6 @@ clean:
 	-rm coreos1.qcow2
 
 .coreos.run: virt-install
+
+readme:
+	cat README.md
