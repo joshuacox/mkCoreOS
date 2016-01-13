@@ -2,3 +2,4 @@ coreos1
 USER_DATA_URL
 NETWORK
 MAC
+coreos_production_qemu_image.img
