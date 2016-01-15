@@ -33,3 +33,8 @@ clean:
 
 readme:
 	cat README.md
+
+example:
+	cp NETWORK.example NETWORK
+	cp MAC.example MAC
+	cp USER_DATA_URL.example USER_DATA_URL
