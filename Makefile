@@ -27,12 +27,13 @@ rmcoreos_production_qemu_image.img:
 	-rm coreos_production_qemu_image.img
 
 clean:
+	-virsh destroy `cat NAME`
+	-virsh undefine `cat NAME`
 	-rm -Rf coreos1
 	-rm coreos1.qcow2
 
 rm:
 	rm .coreos.installed
-	
 
 .coreos.run: virt-install
 
