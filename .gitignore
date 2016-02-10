@@ -3,4 +3,7 @@ coreos1.qcow2
 USER_DATA_URL
 NETWORK
 MAC
+NAME
 coreos_production_qemu_image.img
+.coreos.installed
+.passwd
