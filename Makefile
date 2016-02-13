@@ -31,6 +31,7 @@ clean:
 	-virsh undefine `cat NAME`
 	-rm -Rf coreos1
 	-rm coreos1.qcow2
+	-rm .coreos.installed
 
 rm:
 	rm .coreos.installed
