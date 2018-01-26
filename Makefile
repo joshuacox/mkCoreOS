@@ -11,7 +11,9 @@ coreos_production_qemu_image.img:
 coreos1.qcow2:
 	qemu-img create -f qcow2 -b coreos_production_qemu_image.img coreos1.qcow2
 
-coreos1:
+coreos1: coreos1/openstack/latest coreos1/openstack/latest/user_data
+
+coreos1/openstack/latest:
 	mkdir -p coreos1/openstack/latest
 
 coreos1/openstack/latest/user_data:
