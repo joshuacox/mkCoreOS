@@ -40,7 +40,8 @@ coreos1/domain.xml:
 		--os-type=linux \
 		--os-variant=virtio26 \
 		--disk path=$(PWD)/coreos1.qcow2,format=qcow2,bus=virtio \
-		--network=`cat NETWORK`,`cat MAC` \
+		--network=`cat NETWORK`,`cat MAC`,model=virtio \
+		--network=`cat NETWORK2`,`cat MAC2`,model=virtio \
 		--print-xml > coreos1/domain.xml
 	sed -i 's|type="kvm"|type="kvm" xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0"|' "coreos1/domain.xml"
 	sed -i "/<\/devices>/a <qemu:commandline>\n  <qemu:arg value='-fw_cfg'/>\n  <qemu:arg value='name=opt/com.coreos/config,file=$(PWD)/coreos1/config'/>\n</qemu:commandline>" "coreos1/domain.xml"

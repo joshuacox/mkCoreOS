@@ -1,8 +1,10 @@
 coreos1
 coreos1.qcow2
 USER_DATA_URL
-NETWORK
 MAC
+MAC2
+NETWORK
+NETWORK2
 NAME
 coreos_production_qemu_image.img
 coreos_production_qemu.sh
