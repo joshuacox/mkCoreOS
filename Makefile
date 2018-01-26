@@ -33,7 +33,6 @@ coreos1/domain.xml:
 		--os-type=linux \
 		--os-variant=virtio26 \
 		--disk path=$(PWD)/coreos1.qcow2,format=qcow2,bus=virtio \
-		--filesystem $(PWD)/coreos1/,config-2,type=mount,mode=squash \
 		--network=`cat NETWORK`,`cat MAC` \
 		--print-xml > coreos1/domain.xml
 	sed -i 's|type="kvm"|type="kvm" xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0"|' "coreos1/domain.xml"
