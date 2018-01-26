@@ -24,6 +24,7 @@ coreos1/config:
 	echo `date -I`>>.coreos.installed
 
 coreos1/domain.xml:
+	$(eval PWD := $(shell pwd))
 	virt-install --connect qemu:///system \
 		--import \
 		--name `cat NAME` \
@@ -31,12 +32,12 @@ coreos1/domain.xml:
 		--vcpus 1 \
 		--os-type=linux \
 		--os-variant=virtio26 \
-		--disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio \
-		--filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash \
+		--disk path=$(PWD)/coreos1.qcow2,format=qcow2,bus=virtio \
+		--filesystem $(PWD)/coreos1/,config-2,type=mount,mode=squash \
 		--network=`cat NETWORK`,`cat MAC` \
 		--print-xml > coreos1/domain.xml
 	sed -i 's|type="kvm"|type="kvm" xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0"|' "coreos1/domain.xml"
-	sed -i "/<\/devices>/a <qemu:commandline>\n  <qemu:arg value='-fw_cfg'/>\n  <qemu:arg value='name=opt/com.coreos/config,file=coreos1/config'/>\n</qemu:commandline>" "coreos1/domain.xml"
+	sed -i "/<\/devices>/a <qemu:commandline>\n  <qemu:arg value='-fw_cfg'/>\n  <qemu:arg value='name=opt/com.coreos/config,file=$(PWD)/coreos1/config'/>\n</qemu:commandline>" "coreos1/domain.xml"
 
 hardclean: rmcoreos_production_qemu_image.img clean
 
