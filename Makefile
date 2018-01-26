@@ -70,6 +70,8 @@ example:
 	cp -i NAME.example NAME
 	cp -i NETWORK.example NETWORK
 	cp -i MAC.example MAC
+	cp -i NETWORK2.example NETWORK2
+	cp -i MAC2.example MAC2
 	cp -i USER_DATA_URL.example USER_DATA_URL
 
 ct: /usr/local/bin/ct
