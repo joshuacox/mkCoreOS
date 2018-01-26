@@ -10,7 +10,7 @@ coreos_production_qemu_image.img:
 	bunzip2 coreos_production_qemu_image.img.bz2
 
 coreos1.qcow2:
-	qemu-img create -f qcow2 -b coreos_production_qemu_image.img container-linux1.qcow2
+	qemu-img create -f qcow2 -b coreos_production_qemu_image.img coreos1.qcow2
 
 coreos1: coreos1/config
 
