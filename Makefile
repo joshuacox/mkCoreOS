@@ -18,9 +18,12 @@ coreos1.qcow2:
 
 coreos1: coreos1/config
 
-coreos1/config:
+coreos1/config: config.yaml
 	mkdir -p coreos1
-	curl -o coreos1/config `cat USER_DATA_URL`
+	ct < config.yaml > coreos1/config
+
+config.yaml:
+	curl -o config.yaml `cat USER_DATA_URL`
 
 .coreos.installed: coreos1/domain.xml
 	virsh define coreos1/domain.xml
