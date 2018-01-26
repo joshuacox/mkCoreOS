@@ -34,6 +34,7 @@ coreos1/domain.xml:
 	$(eval PWD := $(shell pwd))
 	virt-install --connect qemu:///system \
 		--import \
+		--autostart \
 		--name `cat NAME` \
 		--ram 1024 \
 		--vcpus 1 \
