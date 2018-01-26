@@ -5,5 +5,6 @@ NETWORK
 MAC
 NAME
 coreos_production_qemu_image.img
+coreos_production_qemu.sh
 .coreos.installed
 .passwd

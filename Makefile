@@ -4,6 +4,9 @@ all: readme
 
 run: coreos_production_qemu_image.img coreos1.qcow2 coreos1 coreos1/config .coreos.installed
 
+coreos_production_qemu.sh:
+	wget -c https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu.sh
+
 coreos_production_qemu_image.img:
 	wget -c https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
 	gpg --verify coreos_production_qemu_image.img.bz2.sig
