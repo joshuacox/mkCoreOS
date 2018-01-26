@@ -67,3 +67,14 @@ example:
 	cp -i NETWORK.example NETWORK
 	cp -i MAC.example MAC
 	cp -i USER_DATA_URL.example USER_DATA_URL
+
+ct: /usr/local/bin/ct
+
+/usr/local/bin/ct:
+	$(eval TMP := $(shell mktemp -d --suffix=CTTMP))
+	cd $(TMP) \
+	&& curl -o ct \
+	https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.6.1/ct-v0.6.1-x86_64-unknown-linux-gnu \
+	&& chmod +x ct \
+	&& mv ct /usr/local/bin/
+	rm -Rf $(TMP)
