@@ -5,23 +5,38 @@ all: readme
 run: coreos_production_qemu_image.img coreos1.qcow2 coreos1 coreos1/openstack/latest/user_data .coreos.installed
 
 coreos_production_qemu_image.img:
-	wget -c http://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2
+	wget -c https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
+	gpg --verify coreos_production_qemu_image.img.bz2.sig
 	bunzip2 coreos_production_qemu_image.img.bz2
 
 coreos1.qcow2:
-	qemu-img create -f qcow2 -b coreos_production_qemu_image.img coreos1.qcow2
+	qemu-img create -f qcow2 -b coreos_production_qemu_image.img container-linux1.qcow2
 
-coreos1: coreos1/openstack/latest coreos1/openstack/latest/user_data
+coreos1: coreos1/config
 
-coreos1/openstack/latest:
-	mkdir -p coreos1/openstack/latest
+coreos1/config:
+	mkdir -p coreos1
+	curl -o coreos1/config `cat USER_DATA_URL`
 
-coreos1/openstack/latest/user_data:
-	curl -o coreos1/openstack/latest/user_data `cat USER_DATA_URL`
-
-.coreos.installed:
-	virt-install --connect qemu:///system --import --name `cat NAME` --ram 1024 --vcpus 1 --os-type=linux --os-variant=virtio26 --disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio --filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash --network=`cat NETWORK`,`cat MAC` --vnc --noautoconsole
+.coreos.installed: coreos1/domain.xml
+	virsh define coreos1/domain.xml
+	virsh start `cat NAME` 
 	echo `date -I`>>.coreos.installed
+
+coreos1/domain.xml:
+	virt-install --connect qemu:///system \
+		--import \
+		--name `cat NAME` \
+		--ram 1024 \
+		--vcpus 1 \
+		--os-type=linux \
+		--os-variant=virtio26 \
+		--disk path=`pwd`/coreos1.qcow2,format=qcow2,bus=virtio \
+		--filesystem `pwd`/coreos1/,config-2,type=mount,mode=squash \
+		--network=`cat NETWORK`,`cat MAC` \
+		--print-xml > coreos1/domain.xml
+	sed -i 's|type="kvm"|type="kvm" xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0"|' "coreos1/domain.xml"
+	sed -i "/<\/devices>/a <qemu:commandline>\n  <qemu:arg value='-fw_cfg'/>\n  <qemu:arg value='name=opt/com.coreos/config,file=coreos1/config'/>\n</qemu:commandline>" "coreos1/domain.xml"
 
 hardclean: rmcoreos_production_qemu_image.img clean
 
