@@ -9,7 +9,8 @@ coreos_production_qemu.sh:
 	chmod +x coreos_production_qemu.sh
 
 coreos_production_qemu_image.img:
-	wget -c https://stable.release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
+	$(eval CHANNEL := $(shell cat CHANNEL))
+	wget -c https://$(CHANNEL).release.core-os.net/amd64-usr/current/coreos_production_qemu_image.img.bz2{,.sig}
 	gpg --verify coreos_production_qemu_image.img.bz2.sig
 	bunzip2 coreos_production_qemu_image.img.bz2
 
@@ -74,6 +75,7 @@ example:
 	cp -i NETWORK.example NETWORK
 	cp -i NETWORK2.example NETWORK2
 	cp -i USER_DATA_URL.example USER_DATA_URL
+	cp -i CHANNEL.example CHANNEL
 
 ct: /usr/local/bin/ct
 
